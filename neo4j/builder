@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+NEO4J_DIR="$HOME/neo4j"
+PACKAGE="http://dist.neo4j.org/neo4j-community-1.7-unix.tar.gz"
+
+cd
+
+if [ -d $NEO4J_DIR ]; then
+	echo "Neo4j is already setup"
+else
+	mkdir -p $NEO4J_DIR
+	curl "$PACKAGE" | tar -zxf- --strip-components=1 -C "$NEO4J_DIR"
+fi
+
+cat > ~/profile << EOF
+NEO4J_DIR="$NEO4J_DIR"
+EOF

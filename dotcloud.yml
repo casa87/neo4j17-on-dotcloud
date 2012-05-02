@@ -1,0 +1,7 @@
+neo4j:
+  type: custom
+  buildscript: neo4j/builder
+  systempackages:
+    - lsof
+  ports:
+    www: http

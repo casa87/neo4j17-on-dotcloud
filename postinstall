@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Source the INSTALL_DIRECTORY variable
+[ -f ~/profile ] && . ~/profile
+
+sed -i 's/^org.neo4j.server.webserver.port=.*//' $NEO4J_DIR/conf/neo4j-server.properties
+sed -i 's/^org.neo4j.server.webserver.address=.*//' $NEO4J_DIR/conf/neo4j-server.properties
+echo org.neo4j.server.webserver.port=$PORT_WWW >> $NEO4J_DIR/conf/neo4j-server.properties
+echo org.neo4j.server.webserver.address=0.0.0.0 >> $NEO4J_DIR/conf/neo4j-server.properties
+
+
+#running script
+cat > ~/run <<EOF
+#!/bin/bash
+exec /usr/bin/java -cp /home/dotcloud/neo4j/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/dotcloud/neo4j/lib/lucene-core-3.5.0.jar:/home/dotcloud/neo4j/lib/neo4j-cypher-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-graph-algo-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-graph-matching-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-jmx-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-kernel-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-lucene-index-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-shell-1.7.jar:/home/dotcloud/neo4j/lib/neo4j-udc-1.7.jar:/home/dotcloud/neo4j/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar:/home/dotcloud/neo4j/lib/scala-library-2.9.0-1.jar:/home/dotcloud/neo4j/lib/server-api-1.7.jar:/home/dotcloud/neo4j/system/lib/antlr-2.7.7.jar:/home/dotcloud/neo4j/system/lib/asm-3.1.jar:/home/dotcloud/neo4j/system/lib/asm-analysis-3.2.jar:/home/dotcloud/neo4j/system/lib/asm-commons-3.2.jar:/home/dotcloud/neo4j/system/lib/asm-tree-3.2.jar:/home/dotcloud/neo4j/system/lib/asm-util-3.2.jar:/home/dotcloud/neo4j/system/lib/bcprov-jdk16-140.jar:/home/dotcloud/neo4j/system/lib/blueprints-core-1.2.jar:/home/dotcloud/neo4j/system/lib/blueprints-neo4j-graph-1.2.jar:/home/dotcloud/neo4j/system/lib/commons-beanutils-1.8.0.jar:/home/dotcloud/neo4j/system/lib/commons-beanutils-core-1.8.0.jar:/home/dotcloud/neo4j/system/lib/commons-collections-3.2.1.jar:/home/dotcloud/neo4j/system/lib/commons-configuration-1.6.jar:/home/dotcloud/neo4j/system/lib/commons-digester-1.8.1.jar:/home/dotcloud/neo4j/system/lib/commons-io-1.4.jar:/home/dotcloud/neo4j/system/lib/commons-lang-2.4.jar:/home/dotcloud/neo4j/system/lib/commons-logging-1.1.1.jar:/home/dotcloud/neo4j/system/lib/gremlin-groovy-1.5.jar:/home/dotcloud/neo4j/system/lib/gremlin-java-1.5.jar:/home/dotcloud/neo4j/system/lib/groovy-1.8.5.jar:/home/dotcloud/neo4j/system/lib/jackson-core-asl-1.8.3.jar:/home/dotcloud/neo4j/system/lib/jackson-jaxrs-1.8.3.jar:/home/dotcloud/neo4j/system/lib/jackson-mapper-asl-1.8.3.jar:/home/dotcloud/neo4j/system/lib/jansi-1.5.jar:/home/dotcloud/neo4j/system/lib/jcl-over-slf4j-1.6.1.jar:/home/dotcloud/neo4j/system/lib/jersey-core-1.9.jar:/home/dotcloud/neo4j/system/lib/jersey-multipart-1.9.jar:/home/dotcloud/neo4j/system/lib/jersey-server-1.9.jar:/home/dotcloud/neo4j/system/lib/jettison-1.3.jar:/home/dotcloud/neo4j/system/lib/jetty-6.1.25.jar:/home/dotcloud/neo4j/system/lib/jetty-util-6.1.25.jar:/home/dotcloud/neo4j/system/lib/jsr311-api-1.1.1.jar:/home/dotcloud/neo4j/system/lib/log4j-over-slf4j-1.6.1.jar:/home/dotcloud/neo4j/system/lib/mimepull-1.6.jar:/home/dotcloud/neo4j/system/lib/neo4j-cypher-plugin-1.7.jar:/home/dotcloud/neo4j/system/lib/neo4j-gremlin-plugin-1.7.jar:/home/dotcloud/neo4j/system/lib/neo4j-server-1.7-static-web.jar:/home/dotcloud/neo4j/system/lib/neo4j-server-1.7.jar:/home/dotcloud/neo4j/system/lib/pipes-1.0.jar:/home/dotcloud/neo4j/system/lib/rrd4j-2.0.7.jar:/home/dotcloud/neo4j/system/lib/servlet-api-2.5-20081211.jar:/home/dotcloud/neo4j/system/lib/slf4j-api-1.6.1.jar:/home/dotcloud/neo4j/system/lib/slf4j-jdk14-1.6.1.jar:/home/dotcloud/neo4j/system/lib/stax-api-1.0.1.jar -server -XX:+DisableExplicitGC -Dorg.neo4j.server.properties=conf/neo4j-server.properties -Djava.util.logging.config.file=conf/logging.properties -Dfile.encoding=UTF-8 -Dlog4j.configuration=file:conf/log4j.properties \
+        -Dorg.neo4j.server.properties="/home/dotcloud/neo4j/conf/neo4j-server.properties" \
+        -Djava.util.logging.config.file="/home/dotcloud/neo4j/conf/logging.properties" \
+        -Dneo4j.home="/home/dotcloud/neo4j/" -Dneo4j.instance="/home/dotcloud/neo4j/" \
+        org.neo4j.server.Bootstrapper 
+EOF
+chmod +x ~/run
