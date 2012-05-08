@@ -3,6 +3,7 @@
 
 NEO4J_DIR="$HOME/neo4j"
 PACKAGE="http://dist.neo4j.org/neo4j-community-1.7-unix.tar.gz"
+PACKAGE_AUTH="http://dist.neo4j.org/authentication-extension-1.4.jar"
 
 cd
 
@@ -11,6 +12,8 @@ if [ -d $NEO4J_DIR ]; then
 else
 	mkdir -p $NEO4J_DIR
 	curl "$PACKAGE" | tar -zxf- --strip-components=1 -C "$NEO4J_DIR"
+	cd $NEO4J_DIR/plugins
+	curl -O "$PACKAGE_AUTH"
 fi
 
 cat > ~/profile << EOF
