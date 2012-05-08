@@ -43,8 +43,10 @@ your Neo4j DB yet).
 Authentication
 --------------
 
-By default, there is **NO** authentication. Anyone knowing its URL
-can acccess your Neo4j DB. You can setup authentication yourself if
-you need to. And of course, when Neo4j will be officially supported,
-authentication will be pre-configured by default, like for other
-dotCloud-supported database stacks.
+Default authentication is located in ~/neo4j/conf/db-acl.properties
+the default accounts are :
+
+write:passwordwrite
+readonly:passwordread
+
+Please don't forget to change it
